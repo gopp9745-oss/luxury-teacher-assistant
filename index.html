@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Teacher Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root[data-theme="light"] {
+            --bg-main: #f4f4f5;
+            --surface: #ffffff;
+            --surface-subtle: #fafafa;
+            --border: #e4e4e7;
+            --border-hover: #a1a1aa;
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --accent: #18181b;
+            --accent-hover: #27272a;
+            --accent-text: #ffffff;
+            --focus-ring: rgba(24, 24, 27, 0.15);
+            --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-main: #09090b;
+            --surface: #18181b;
+            --surface-subtle: #27272a;
+            --border: #27272a;
+            --border-hover: #52525b;
+            --text-main: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #fafafa;
+            --accent-hover: #e4e4e7;
+            --accent-text: #09090b;
+            --focus-ring: rgba(250, 250, 250, 0.2);
+            --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+            --success: #10b981;
+            --danger: #f87171;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            height: 64px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            background: var(--text-main);
+            color: var(--surface);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .brand-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .mode-switch {
+            display: flex;
+            background: var(--surface-subtle);
+            padding: 3px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .mode-btn {
+            padding: 6px 14px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .mode-btn.active {
+            background: var(--surface);
+            color: var(--text-main);
+            box-shadow: var(--card-shadow);
+        }
+
+        .header-btn {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-main);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-btn:hover {
+            border-color: var(--border-hover);
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px;
+            flex: 1;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .panel-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: var(--accent-text);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .canvas {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .canvas-header {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .action-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .download-btn {
+            padding: 8px 14px;
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .download-btn.primary {
+            background: var(--success);
+            color: #ffffff;
+            border: none;
+        }
+
+        .cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .editor-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-muted);
+        }
+
+        .delete-btn {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        [contenteditable="true"] {
+            outline: none;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        [contenteditable="true"]:focus {
+            background: var(--surface-subtle);
+        }
+
+        .card-title-input {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .option-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .option-row input[type="radio"], .option-row input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .matching-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            background: var(--surface-subtle);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .notes-box {
+            background: var(--surface-subtle);
+            border-left: 3px solid var(--text-main);
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .loading-overlay {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-muted);
+        }
+
+        .empty-state {
+            background: var(--surface);
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* --- ИСТОРИЯ (LOCALSTORAGE НА ПК) --- */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 100;
+            justify-content: flex-end;
+        }
+
+        .modal-drawer {
+            width: 420px;
+            max-width: 90vw;
+            background: var(--surface);
+            height: 100%;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+            overflow-y: auto;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .drawer-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .history-item {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .history-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .history-topic {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .history-btn {
+            flex: 1;
+            padding: 6px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--surface);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        .history-btn:hover {
+            border-color: var(--border-hover);
+        }
+
+        .history-btn.danger {
+            color: var(--danger);
+            border-color: var(--border);
+        }
+
+        .history-btn.danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* --- ПРЕМИАЛЬНАЯ ПЛАВНАЯ АНИМАЦИЯ ГОТОВНОСТИ --- */
+        .success-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(9, 9, 11, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+        }
+
+        .success-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 42px 52px;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.35), 0 0 40px rgba(16, 185, 129, 0.12);
+            text-align: center;
+            transform: scale(0.85) translateY(24px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+        }
+
+        .success-overlay.active .success-card {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .success-icon {
+            width: 72px; height: 72px;
+            background: var(--accent);
+            color: var(--accent-text);
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700; font-size: 36px;
+        }
+
+        .success-close-btn {
+            margin-top: 8px;
+            padding: 10px 24px;
+            background: var(--accent);
+            color: var(--accent-text);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .success-close-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Каскадное появление элементов */
+        .success-overlay.active .success-icon {
+            animation: popIcon 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s backwards;
+        }
+
+        .success-overlay.active .success-title-text {
+            animation: fadeElementUp 0.5s ease 0.22s backwards;
+        }
+
+        .success-overlay.active .success-subtitle-text {
+            animation: fadeElementUp 0.5s ease 0.32s backwards;
+        }
+
+        .success-overlay.active .success-close-btn {
+            animation: fadeElementUp 0.5s ease 0.42s backwards;
+        }
+
+        @keyframes popIcon {
+            0% { transform: scale(0.2) rotate(-10deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes fadeElementUp {
+            0% { transform: translateY(12px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="brand">
+        <div class="brand-logo">L</div>
+        <div class="brand-title">Luxury Teacher Assistant</div>
+    </div>
+
+    <div style="display: flex; gap: 12px; align-items: center;">
+        <div class="mode-switch">
+            <button class="mode-btn active" id="tab-test" onclick="switchTab('test')">📝 Тест</button>
+            <button class="mode-btn" id="tab-pres" onclick="switchTab('presentation')">📊 Презентация</button>
+        </div>
+
+        <button class="header-btn" onclick="openHistoryDrawer()">📜 История ПК</button>
+        <button class="header-btn" onclick="toggleTheme()" id="theme-icon">🌙</button>
+    </div>
+</header>
+
+<main class="workspace">
+    <aside class="panel">
+        <h1 class="panel-title">Генерация материалов</h1>
+        <p class="panel-subtitle">Укажите параметры урока</p>
+
+        <form id="generator-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Предмет</label>
+                    <select id="subject" required>
+                        <option value="Литература">Литература</option>
+                        <option value="Русский язык">Русский язык</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Класс</label>
+                    <input type="text" id="grade" value="8 класс" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Тема урока</label>
+                <input type="text" id="topic" placeholder="Например: Капитанская дочка" required>
+            </div>
+
+            <div id="test-fields">
+                <div class="form-group">
+                    <label>Формат заданий</label>
+                    <select id="question_format">
+                        <option value="single">1 верный ответ (Стандарт)</option>
+                        <option value="multiple">Несколько верных ответов (2+)</option>
+                        <option value="mixed">🔥 Смешанная работа (Тест + Соответствия)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Кол-во вопросов</label>
+                        <input type="number" id="questions_count" value="5" min="1" max="15">
+                    </div>
+                    <div class="form-group">
+                        <label>Режим</label>
+                        <select id="test_type">
+                            <option value="anti_cheat">🔥 Анти-списывание</option>
+                            <option value="standard">📚 Стандартный</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="presentation-fields" style="display: none;">
+                <div class="form-group">
+                    <label>Количество слайдов</label>
+                    <input type="number" id="slides_count" value="6" min="3" max="15">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Особые пожелания</label>
+                <textarea id="custom_notes" rows="3" placeholder="Укажите акценты..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">⚡ Сгенерировать</button>
+        </form>
+    </aside>
+
+    <section class="canvas">
+        <div class="canvas-header">
+            <div>
+                <h2 style="font-size: 16px; font-weight: 700;">Редактор материалов</h2>
+                <p style="font-size: 12px; color: var(--text-muted);">Отмечайте галочками верные варианты перед скачиванием</p>
+            </div>
+            
+            <div class="action-group" id="download-actions" style="display: none;"></div>
+        </div>
+
+        <div class="loading-overlay" id="loading-overlay">⏳ ИИ генерирует материалы...</div>
+
+        <div class="empty-state" id="empty-state">
+            <div style="font-size: 32px; margin-bottom: 8px;">📄</div>
+            <h3>Материалы пока не созданы</h3>
+            <p>Заполните форму слева и нажмите «Сгенерировать» или откройте прошлые из «Истории ПК»</p>
+        </div>
+
+        <div class="cards-list" id="cards-list"></div>
+    </section>
+</main>
+
+<!-- МОДАЛ ИСТОРИИ ПК -->
+<div class="modal-backdrop" id="history-modal">
+    <div class="modal-drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">📜 История на вашем ПК</span>
+            <button class="close-btn" onclick="closeHistoryDrawer()">✕</button>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted);">Материалы хранятся строго в вашем браузере.</p>
+        <div id="history-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+    </div>
+</div>
+
+<!-- ОВЕРЛЕЙ УСПЕШНОЙ ГЕНЕРАЦИИ -->
+<div class="success-overlay" id="success-overlay">
+    <div class="success-card">
+        <div class="success-icon">L</div>
+        <div class="success-title-text" style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700;">Ваш помощник, люкс ассистент</div>
+        <div class="success-subtitle-text" style="font-size: 14px; color: var(--success); font-weight: 600;">✓ Работа успешно сформирована!</div>
+        <button class="success-close-btn" onclick="closeSuccessOverlay()">Понятно, закрыть</button>
+    </div>
+</div>
+
+<script>
+    let currentMode = 'test';
+    let currentData = null;
+    const API_URL = 'http://127.0.0.1:8000';
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        document.getElementById('theme-icon').innerText = newTheme === 'light' ? '🌙' : '☀️';
+        localStorage.setItem('theme', newTheme);
+    }
+
+    function switchTab(mode) {
+        currentMode = mode;
+        document.getElementById('tab-test').classList.toggle('active', mode === 'test');
+        document.getElementById('tab-pres').classList.toggle('active', mode === 'presentation');
+
+        document.getElementById('test-fields').style.display = mode === 'test' ? 'block' : 'none';
+        document.getElementById('presentation-fields').style.display = mode === 'presentation' ? 'block' : 'none';
+        
+        document.getElementById('empty-state').style.display = 'block';
+        document.getElementById('cards-list').innerHTML = '';
+        document.getElementById('download-actions').style.display = 'none';
+    }
+
+    // Плавное открытие оверлея и запуск озвучки
+    function playSuccessAnimationAndVoice() {
+        const overlay = document.getElementById('success-overlay');
+        overlay.style.display = 'flex';
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                overlay.classList.add('active');
+            });
+        });
+
+        const audio = new Audio('voice.mp3');
+        audio.play().catch(() => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance("Ваш помощник, люкс ассистент");
+                utterance.lang = 'ru-RU';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        });
+    }
+
+    // Плавное закрытие оверлея
+    function closeSuccessOverlay() {
+        const overlay = document.getElementById('success-overlay');
+        overlay.classList.remove('active');
+
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 400);
+    }
+
+    document.getElementById('generator-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submit-btn');
+        const loader = document.getElementById('loading-overlay');
+        const emptyState = document.getElementById('empty-state');
+        const cardsList = document.getElementById('cards-list');
+        const downloadActions = document.getElementById('download-actions');
+
+        submitBtn.disabled = true;
+        loader.style.display = 'block';
+        emptyState.style.display = 'none';
+        cardsList.innerHTML = '';
+        downloadActions.style.display = 'none';
+
+        const endpoint = currentMode === 'test' ? '/generate-test' : '/generate-presentation';
+        
+        const payload = {
+            subject: document.getElementById('subject').value,
+            topic: document.getElementById('topic').value,
+            grade: document.getElementById('grade').value,
+            custom_notes: document.getElementById('custom_notes').value
+        };
+
+        if (currentMode === 'test') {
+            payload.questions_count = parseInt(document.getElementById('questions_count').value);
+            payload.test_type = document.getElementById('test_type').value;
+            payload.question_format = document.getElementById('question_format').value;
+        } else {
+            payload.slides_count = parseInt(document.getElementById('slides_count').value);
+        }
+
+        try {
+            const response = await fetch(API_URL + endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const resData = await response.json();
+
+            if (resData.success) {
+                currentData = resData.data;
+                renderPreview();
+                renderDownloadButtons();
+                downloadActions.style.display = 'flex';
+                saveItemToLocalHistory();
+                playSuccessAnimationAndVoice();
+            } else {
+                alert('Ошибка генерации: ' + (resData.detail || 'Неизвестная ошибка'));
+                emptyState.style.display = 'block';
+            }
+        } catch (err) {
+            alert('Не удалось связаться с сервером.');
+            emptyState.style.display = 'block';
+        } finally {
+            submitBtn.disabled = false;
+            loader.style.display = 'none';
+        }
+    });
+
+    function renderPreview() {
+        const container = document.getElementById('cards-list');
+        container.innerHTML = '';
+
+        if (currentMode === 'test') {
+            (currentData.questions || []).forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'editor-card';
+                card.dataset.index = index;
+
+                const qType = q.type || 'single';
+
+                if (qType === 'matching') {
+                    card.innerHTML = `
+                        <div class="card-top">
+                            <span class="card-badge">Задание ${index + 1} (Соответствие)</span>
+                            <button class="delete-btn" onclick="deleteCard(${index})">Удалить</button>
+                        </div>
+                        <div class="card-title-input" contenteditable="true" data-field="question">${q.question}</div>
+                        <div class="matching-grid">
+                            <div>
+                                <strong>Левая колонка:</strong>
+                                ${(q.left_column || []).map((l, i) => `<div contenteditable="true" data-left-idx="${i}">${l}</div>`).join('')}
+                            </div>
+                            <div>
+                                <strong>Правая колонка:</strong>
+                                ${(q.right_column || []).map((r, i) => `<div contenteditable="true" data-right-idx="${i}">${r}</div>`).join('')}
+                            </div>
+                        </div>
+                        <div class="notes-box">
+                            <strong>Верные пары:</strong> 
+                            <span contenteditable="true" data-field="correct_pairs">${(q.correct_pairs || []).join(', ')}</span>
+                        </div>
+                    `;
+                } else {
+                    const isMultiple = qType === 'multiple';
+                    const correctAnswers = q.correct_answers || (q.correct_answer ? [q.correct_answer] : []);
+
+                    card.innerHTML = `
+                        <div class="card-top">
+                            <span class="card-badge">Вопрос ${index + 1} ${isMultiple ? '(Несколько ответов)' : ''}</span>
+                            <button class="delete-btn" onclick="deleteCard(${index})">Удалить</button>
+                        </div>
+                        <div class="card-title-input" contenteditable="true" data-field="question">${q.question}</div>
+                        <div class="options-grid">
+                            ${(q.options || []).map((opt, i) => {
+                                const isChecked = correctAnswers.some(c => c === opt || c.startsWith(opt.slice(0, 2)));
+                                const inputType = isMultiple ? 'checkbox' : 'radio';
+                                return `
+                                    <div class="option-row">
+                                        <input type="${inputType}" name="correct_q_${index}" value="${i}" ${isChecked ? 'checked' : ''}>
+                                        <span contenteditable="true" data-option-index="${i}">${opt}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <div class="notes-box">
+                            <strong>Пояснение:</strong> 
+                            <span contenteditable="true" data-field="explanation">${q.explanation || ''}</span>
+                        </div>
+                    `;
+                }
+                container.appendChild(card);
+            });
+        } else {
+            (currentData.slides || []).forEach((s, index) => {
+                const card = document.createElement('div');
+                card.className = 'editor-card';
+                card.innerHTML = `
+                    <div class="card-top">
+                        <span class="card-badge">Слайд ${index + 1}</span>
+                        <button class="delete-btn" onclick="deleteCard(${index})">Удалить</button>
+                    </div>
+                    <div class="card-title-input" contenteditable="true" data-field="title">${s.title}</div>
+                    <div class="options-grid">
+                        ${(s.content_bullets || []).map((b, i) => `
+                            <div class="option-row" contenteditable="true" data-bullet-index="${i}">• ${b}</div>
+                        `).join('')}
+                    </div>
+                    <div class="notes-box">
+                        <strong>Заметка ведущего:</strong> 
+                        <span contenteditable="true" data-field="teacher_notes">${s.teacher_notes || ''}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    }
+
+    function renderDownloadButtons() {
+        const container = document.getElementById('download-actions');
+        container.innerHTML = '';
+
+        if (currentMode === 'test') {
+            container.innerHTML = `
+                <button class="download-btn" onclick="downloadFile('student')">📄 Только работа</button>
+                <button class="download-btn" onclick="downloadFile('teacher')">🔑 Только ответы</button>
+                <button class="download-btn primary" onclick="downloadFile('full')">📑 Работа + Ответы</button>
+            `;
+        } else {
+            container.innerHTML = `
+                <button class="download-btn primary" onclick="downloadFile('pptx')">📊 Скачать .pptx</button>
+            `;
+        }
+    }
+
+    function deleteCard(index) {
+        if (currentMode === 'test') {
+            currentData.questions.splice(index, 1);
+        } else {
+            currentData.slides.splice(index, 1);
+        }
+        renderPreview();
+        saveItemToLocalHistory();
+    }
+
+    function collectEditedData() {
+        const cards = document.querySelectorAll('.editor-card');
+        
+        if (currentMode === 'test') {
+            const updatedQuestions = [];
+            cards.forEach((card, index) => {
+                const qType = currentData.questions[index]?.type || 'single';
+                const qText = card.querySelector('[data-field="question"]').innerText.trim();
+
+                if (qType === 'matching') {
+                    const leftEls = card.querySelectorAll('[data-left-idx]');
+                    const rightEls = card.querySelectorAll('[data-right-idx]');
+                    const pairsText = card.querySelector('[data-field="correct_pairs"]').innerText.trim();
+
+                    updatedQuestions.push({
+                        id: updatedQuestions.length + 1,
+                        type: 'matching',
+                        question: qText,
+                        left_column: Array.from(leftEls).map(el => el.innerText.trim()),
+                        right_column: Array.from(rightEls).map(el => el.innerText.trim()),
+                        correct_pairs: pairsText.split(',').map(s => s.trim()),
+                        explanation: ''
+                    });
+                } else {
+                    const expText = card.querySelector('[data-field="explanation"]').innerText.trim();
+                    const optionElements = card.querySelectorAll('[data-option-index]');
+                    const options = Array.from(optionElements).map(el => el.innerText.trim());
+
+                    const checkedInputs = card.querySelectorAll(`input[name="correct_q_${index}"]:checked`);
+                    const selectedIndices = Array.from(checkedInputs).map(i => parseInt(i.value));
+                    
+                    const correctAnswers = selectedIndices.map(idx => options[idx]).filter(Boolean);
+
+                    updatedQuestions.push({
+                        id: updatedQuestions.length + 1,
+                        type: qType,
+                        question: qText,
+                        options: options,
+                        correct_answers: correctAnswers.length > 0 ? correctAnswers : [options[0] || ""],
+                        explanation: expText
+                    });
+                }
+            });
+            currentData.questions = updatedQuestions;
+        } else {
+            const updatedSlides = [];
+            cards.forEach((card) => {
+                const titleText = card.querySelector('[data-field="title"]').innerText.trim();
+                const notesText = card.querySelector('[data-field="teacher_notes"]').innerText.trim();
+                
+                const bulletElements = card.querySelectorAll('[data-bullet-index]');
+                const bullets = Array.from(bulletElements).map(el => el.innerText.replace(/^•\s*/, '').trim());
+
+                updatedSlides.push({
+                    slide_number: updatedSlides.length + 1,
+                    title: titleText,
+                    content_bullets: bullets,
+                    teacher_notes: notesText
+                });
+            });
+            currentData.slides = updatedSlides;
+        }
+        return currentData;
+    }
+
+    async function downloadFile(docMode) {
+        if (!currentData) return;
+
+        const updatedData = collectEditedData();
+        saveItemToLocalHistory();
+
+        const isTest = currentMode === 'test';
+        const endpoint = isTest ? '/download-docx' : '/download-pptx';
+
+        const payload = isTest 
+            ? { data: updatedData, doc_mode: docMode }
+            : { data: updatedData };
+
+        try {
+            const response = await fetch(API_URL + endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) throw new Error('Ошибка создания файла');
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = isTest ? 'Проверочная_работа.docx' : 'Презентация.pptx';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        } catch (err) {
+            alert('Ошибка скачивания: ' + err.message);
+        }
+    }
+
+    // --- ЛОКАЛЬНАЯ ИСТОРИЯ (LOCALSTORAGE НА ПК) ---
+
+    function getLocalHistory() {
+        return JSON.parse(localStorage.getItem('luxury_teacher_history') || '[]');
+    }
+
+    function saveItemToLocalHistory() {
+        if (!currentData) return;
+
+        const history = getLocalHistory();
+        const itemTopic = currentData.title || currentData.topic || document.getElementById('topic').value || 'Урок';
+        const itemSubject = currentData.subject || document.getElementById('subject').value;
+        const itemGrade = currentData.grade || document.getElementById('grade').value;
+        
+        const timestamp = new Date().toLocaleString('ru-RU', { dateStyle: 'short', timeStyle: 'short' });
+
+        const existingIndex = history.findIndex(h => h.id === currentData._history_id);
+
+        const historyEntry = {
+            id: currentData._history_id || Date.now(),
+            mode: currentMode,
+            subject: itemSubject,
+            grade: itemGrade,
+            topic: itemTopic,
+            date: timestamp,
+            data: currentData
+        };
+
+        currentData._history_id = historyEntry.id;
+
+        if (existingIndex >= 0) {
+            history[existingIndex] = historyEntry;
+        } else {
+            history.unshift(historyEntry);
+        }
+
+        if (history.length > 30) history.pop();
+        localStorage.setItem('luxury_teacher_history', JSON.stringify(history));
+    }
+
+    function openHistoryDrawer() {
+        const modal = document.getElementById('history-modal');
+        const container = document.getElementById('history-container');
+        const history = getLocalHistory();
+
+        container.innerHTML = '';
+
+        if (history.length === 0) {
+            container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 40px 0;">История пуста. Все созданные тесты и презентации будут сохраняться здесь.</div>';
+        } else {
+            history.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'history-item';
+                card.innerHTML = `
+                    <div class="history-meta">
+                        <span>${item.mode === 'test' ? '📝 РАБОТА' : '📊 ПРЕЗЕНТАЦИЯ'} • ${item.subject} (${item.grade})</span>
+                        <span>${item.date}</span>
+                    </div>
+                    <div class="history-topic">${item.topic}</div>
+                    <div class="history-actions">
+                        <button class="history-btn" onclick="loadFromHistory(${item.id})">Открыть в редакторе</button>
+                        <button class="history-btn danger" onclick="removeFromHistory(${item.id})">Удалить</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        modal.style.display = 'flex';
+    }
+
+    function closeHistoryDrawer() {
+        document.getElementById('history-modal').style.display = 'none';
+    }
+
+    function loadFromHistory(id) {
+        const history = getLocalHistory();
+        const item = history.find(h => h.id === id);
+        if (!item) return;
+
+        switchTab(item.mode);
+        currentData = item.data;
+        currentData._history_id = item.id;
+
+        document.getElementById('empty-state').style.display = 'none';
+        renderPreview();
+        renderDownloadButtons();
+        document.getElementById('download-actions').style.display = 'flex';
+        closeHistoryDrawer();
+    }
+
+    function removeFromHistory(id) {
+        let history = getLocalHistory();
+        history = history.filter(h => h.id !== id);
+        localStorage.setItem('luxury_teacher_history', JSON.stringify(history));
+        openHistoryDrawer();
+    }
+</script>
+
+</body>
+</html>
